@@ -2,8 +2,8 @@
 #informacje potrzebne do połączenia z serwerem
 $serverHost="localhost";
 $rconPort=25575;
-$rconPassword="pAsSwOrD";
-$serverPath="path/to/minecraft/server/folder";
+$rconPassword="password";
+$serverPath="/home/mike/Documents/docs/server/";
 
 #Panel administracyjny RCON
 $panel_login='admin';

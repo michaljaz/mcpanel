@@ -15,18 +15,16 @@ sudo chown www-data:www-data -R /ścieżka/do/plików/serwera
 <h1>Plik konfiguracyjny:</h1>
 
 ```php
-#adres serwera (ip)
+<?php
+#informacje potrzebne do połączenia z serwerem
 $serverHost="localhost";
-
-#RCON
 $rconPort=25575;
-$rconPassword="pAsSwOrD";
-
-#Ścieżka od serwera
-$serverPath="path/to/minecraft/server/folder";
+$rconPassword="password";
+$serverPath="/ścieżka/do/plików/serwera/";
 
 #Panel administracyjny RCON
 $panel_login='admin';
 $panel_password='password';
+?>
 ?>
 ```
