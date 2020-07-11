@@ -13,6 +13,7 @@ sudo chown www-data:www-data -R /ścieżka/do/plików/serwera
 
 ```
 <h1>Plik konfiguracyjny:</h1>
+
 ```php
 #adres serwera (ip)
 $serverHost="localhost";
