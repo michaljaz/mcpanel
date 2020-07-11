@@ -1,6 +1,7 @@
 # mcpanel
 Panel Zarządzania serwerem minecraftowym<br>
 <h1>Instalacja:</h1>
+
 ```bash
 git clone https://github.com/michaljaz/mcpanel
 
