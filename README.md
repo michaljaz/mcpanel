@@ -1,5 +1,10 @@
 # mcpanel
 Panel Zarządzania serwerem minecraftowym<br>
+<img src="screenshot.png"
+     alt="Screenshot"
+     style="float: left; margin-right: 10px;" />
+     <br><br>
+
 <h1>Instalacja:</h1>
 
 ```bash
