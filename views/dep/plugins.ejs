@@ -1,0 +1,271 @@
+<%
+if(query.path!=undefined){
+	if(query.path.search('/')==-1){
+		back="?temp=plugins";
+	}else{
+		i=query.path.length;
+		while(query.path[i]!="/"){
+			i--;
+		}
+		back="?temp=plugins&path="+query.path.substring(0,i);
+	}
+}else{
+	back="?temp=plugins";
+}
+%>
+
+
+<style>
+.xdxd .btn{
+	margin:0px;
+	padding:10px;
+}
+
+</style>
+
+<div class="card text-light" style="background:#292929">
+	<div class="card-header">
+		<a class="btn btn-primary" href="<%-back%>">
+			<i class="fas fa-arrow-left"></i>
+		</a>
+		<!-- Split button -->
+		<button class="btn btn-dark" onclick="del_files()">
+			Usuń zaznaczone
+		</button>
+		<div class="float-right">
+			<button class="btn btn-dark" onclick="new_file()">
+				Nowy plik
+			</button>
+			<button class="btn btn-dark" onclick="new_folder()">
+				Nowy folder
+			</button>
+		</div>
+		<div></div>
+		<br>
+		
+		<div class="row">
+			<div class="col-md-1 mt-2">
+				<center>
+					<div class="custom-control custom-checkbox">
+					    <input type="checkbox" class="custom-control-input" id="uall" onchange="check_a(this)">
+					    <label class="custom-control-label" for="uall"></label>
+					</div>
+    			</center>
+			</div>
+			<div class="col-md-3">
+				<div class="text-left mt-2">
+	    			Nazwa
+	    		</div>
+			</div>
+			<div class="col-md-4">
+				Opcje
+			</div>
+			<div class="col-md-2">
+				Rozmiar
+			</div>
+			<div class="col-md-2">
+				Chmod
+			</div>
+		</div>
+	</div>
+	<div class="card-body" style="overflow:auto;height:600px;">
+		<%
+		if(query.path!=undefined){
+			var xd=query.path.split("/");
+			var dir={}
+			for(var i=0;i<xd.length;i++){
+				dirTree=dirTree[xd[i]];
+			}
+		}
+		
+		%>
+		<%Object.keys(dirTree).forEach(function (p){
+			if(p!="__uuid" && p!="__perms"){
+			if(!dirTree[p].isFile){%>
+	    	<div class="row mb-2">
+    			<div class="col-md-1 mt-2">
+    				<center>
+						<div class="custom-control custom-checkbox">
+						    <input type="checkbox" class="custom-control-input" id="u<%-dirTree[p].__uuid%>" onchange="check('<%-p%>/',this)">
+						    <label class="custom-control-label" for="u<%-dirTree[p].__uuid%>"></label>
+						</div>
+					</center>
+    			</div>
+    			<%if(query.path==undefined){
+    				redirect=p
+    			}else{
+    				redirect=query.path+"/"+p
+    			}%>
+    			<div class="col-md-3 waves waves-light" onclick="document.location='?temp=plugins&path=<%-redirect%>'">
+    				<div class="text-left mt-2 text-primary">
+		    			<i class="fas fa-folder"></i> <%-p%>
+		    		</div>
+    			</div>
+    			<div class="col-md-4 xdxd">
+    				<button class="btn btn-outline-success" onclick="changeName('<%-p%>/')">
+    					Zmień nazwę
+    				</button>
+    			</div>
+    			<div class="col-md-2">
+					<div class="ml-3">
+    					<%
+    					var files=0;
+    					Object.keys(dirTree[p]).forEach(function (f){
+    						if(f!="__uuid" && f!="__perms"){
+    							files++
+    						}
+    					})
+    					%>
+    					<%-files%> plików
+    				</div>
+				</div>
+    			<div class="col-md-2">
+    				<div class="ml-3">
+    					<%-dirTree[p].__perms%>
+    				</div>
+					
+				</div>
+    			
+    		</div>
+    		<hr>
+    		<%}else{%>
+	    	<div class="row mb-2">
+    			<div class="col-md-1 mt-2">
+    				<center>
+						<div class="custom-control custom-checkbox">
+						    <input type="checkbox" class="custom-control-input" id="u<%-dirTree[p].__uuid%>" onchange="check('<%-p%>',this)">
+						    <label class="custom-control-label" for="u<%-dirTree[p].__uuid%>"></label>
+						</div>
+	    			</center>
+    			</div>
+    			<div class="col-md-3">
+    				<div class="text-left mt-2">
+    					<i class="fas fa-file"></i> <%-p%>
+		    		</div>
+    			</div>
+    			<%if(query.path==undefined){
+    				redirect=p
+    			}else{
+    				redirect=query.path+"/"+p
+    			}%>
+    			<div class="col-md-4 xdxd">
+    				<button class="btn btn-outline-warning" onclick="document.location='?temp=ace&file=<%-p%>&loc=<%-redirect%>&back=<%=query.path%>'">
+    					Edytuj
+    				</button>
+    				<button class="btn btn-outline-success" onclick="changeName('<%-p%>')">
+    					Zmień nazwę
+    				</button>
+    				<!-- onclick="document.location='?temp=pluginedit&plugin=<?php echo $plugins[$i]; ?>'" -->
+    			</div>
+    			<div class="col-md-2">
+					<div class="ml-3">
+    					<%-dirTree[p].size%>
+    				</div>
+				</div>
+    			<div class="col-md-2">
+    				<div class="ml-3">
+    					<%-dirTree[p].perms%>
+    				</div>
+				</div>
+    		</div>
+    		<hr>
+	    	<%}}%>
+
+	    <%})%>
+	</div>
+</div>
+<script type="text/javascript">
+function new_file(){
+	var name=prompt("Nazwa pliku:")
+	if(name!=null){
+		<%if(query.path==undefined){
+			loc=""
+		}else{
+			loc=query.path+"/"
+		}%>
+		$.post("/api/new_",{
+			type:"file",
+			loc:"<%-loc%>"+name
+		},function (r){
+			console.log(r)
+			document.location.reload()
+		})
+	}
+}
+function new_folder(){
+	var name=prompt("Nazwa folderu:")
+	if(name!=null){
+		<%if(query.path==undefined){
+			loc=""
+		}else{
+			loc=query.path+"/"
+		}%>
+		$.post("api/new_",{
+			type:"folder",
+			loc:"<%-loc%>/"+name
+		},function (r){
+			console.log(r)
+			document.location.reload()
+		})
+	}
+	
+}
+var checked={}
+function check(name,_this){
+	checked[name]=_this.checked
+	// updateStatus()
+}
+function check_a(_this){
+	console.log(_this.checked)
+	<%Object.keys(dirTree).forEach(function (p){%>
+		$('#u<%-dirTree[p].__uuid%>').attr("checked",_this.checked)
+		checked['<%-p%>']=_this.checked
+	<%})%>
+}
+function changeName(old){
+	var name=prompt(`Zmień nazwę`,old)
+	if(name!=null){
+		<%if(query.path==undefined){
+			loc=""
+		}else{
+			loc=query.path+"/"
+		}%>
+		$.post("api/chname",
+			{
+				from:old,
+				to:name,
+				path:"<%-loc%>"
+			},function (r){
+				console.log(r)
+				document.location.reload()
+			}
+		)
+	}
+	console.log(name)
+}
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+function del_files(){
+	if(isEmpty(checked)==false){
+		<%if(query.path==undefined){
+			loc=""
+		}else{
+			loc=query.path+"/"
+		}%>
+		$.post("api/delfiles",
+			{
+				files:checked,
+				path:"<%-loc%>"
+			},
+			function (r){
+				console.log(r)
+				document.location.reload()
+			}
+		)
+	}else{
+		alert("Musisz zaznaczyć co najmniej jeden element!")
+	}
+	
+}
+	</script>

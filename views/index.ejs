@@ -1,13 +1,4 @@
 
-<?php
-require "config.php";
-if($_GET["action"]=="logout"){
-	$_SERVER['PHP_AUTH_USER']="";
-	$_SERVER['PHP_AUTH_PW']="";
-}
-if($_SERVER['PHP_AUTH_USER']==$panel_login && $_SERVER['PHP_AUTH_PW']==$panel_password){
-	echo "<pre>$xd</pre>";
-	?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,32 +40,16 @@ body{
 		<a type="button" class="btn btn-dark" href="?temp=main">Panel Administracyjny</a>
 		<a class="btn btn-dark" href="?temp=rcon">Konsola</a>
 		<a class="btn btn-dark" href="?temp=plugins">WebFTP</a>
-		<a href="?action=logout" class="btn btn-outline-danger">Wyloguj</a>
-		
-		
 		<br><br>
-		<?php 
-$access=["index","rcon","plugins","settings","pluginedit","ace"];
-$temp=$_GET["temp"];
-if(!isset($temp)){
-	echo "<script>document.location='?temp=index'</script>";
-}else if(in_array($temp,$access,TRUE)){
-	include("temp/".$temp.".php");
-}else{
-	header("Location: ?temp=index");
-}
-?>
+		<% 
+        access=["main","rcon","plugins","settings","pluginedit","ace"];
+        if(query.temp==undefined){ %>
+            <script>document.location.href="?temp=main"</script>
+        <% }else if (access.includes(query.temp)){ %>
+            <%- include(`dep/${query.temp}`, {query,config,properties,dirTree} ); %>
+        <% }else{ %> 
+            <script>document.location.href="?temp=main"</script>
+        <% } %> 
 	</div>
 </body>
 </html>
-	<?php
-}else{
-	header('WWW-Authenticate: Basic realm="My Realm"');
-    header('HTTP/1.0 401 Unauthorized');
-    ?>
-    <!-- Nie uda ci się tutaj dostać
-    	Wszystko zostało bardzo dobrze zabezpieczone-->
-  <script>document.location='../'</script>
-    <?php
-}
-?>

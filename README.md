@@ -1,35 +1,45 @@
 # mcpanel
-Panel Zarządzania serwerem minecraftowym<br>
-<img src="screenshot.png"
-     alt="Screenshot"
-     style="float: left; margin-right: 10px;" />
-     <br><br>
+Prosty panel zarządzania serwerem minecraftowym.<br>
 
-<h1>Instalacja:</h1>
+
+<h3>Instalacja:</h3>
 
 ```bash
 git clone https://github.com/michaljaz/mcpanel
+cd mcpanel
 
-#Pamiętaj aby ustawić prawidłowe uprawnienia do plików serwera
-#Przykład:
-sudo chmod 777 -R /ścieżka/do/plików/serwera
-sudo chown www-data:www-data -R /ścieżka/do/plików/serwera
+#instalacja bibliotek
+npm install
 
-
+#Uruchamianie serwera
+npm start
 ```
-<h1>Plik konfiguracyjny:</h1>
+
+<h3>Plik konfiguracyjny(config.json):</h3>
 
 ```php
-<?php
-#informacje potrzebne do połączenia z serwerem
-$serverHost="localhost";
-$rconPort=25575;
-$rconPassword="password";
-$serverPath="/ścieżka/do/plików/serwera/";
-
-#Panel administracyjny RCON
-$panel_login='admin';
-$panel_password='password';
-?>
-?>
+{
+	"server":{
+		"host":"localhost",
+		"port":25565,
+		"path":"/ścieżka/do/plików/twojego/serwera"
+	},
+	"panel":{
+		"login":"admin",
+		"password":"password",
+		"port":8080
+	}
+}
 ```
+<img src="src/screen1.png"
+     alt="Screenshot"
+     style="float: left; margin-right: 10px;margin-bottom:10px;" />
+     <br><br>
+<img src="src/screen2.png"
+     alt="Screenshot"
+     style="float: left; margin-right: 10px;margin-bottom:10px;" />
+     <br><br>
+<img src="src/screen3.png"
+     alt="Screenshot"
+     style="float: left; margin-right: 10px;" />
+     <br><br>

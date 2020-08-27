@@ -1,21 +1,18 @@
-<?php
 
-require dirname(__FILE__)."/../config.php";
-if($_SERVER['PHP_AUTH_USER']==$panel_login && $_SERVER['PHP_AUTH_PW']==$panel_password){
-  //
-}else{
-  http_response_code(404);
-  die();
-  exit;
-}
-?>
 <style type="text/css" media="screen">
    #editor {
        height: 500px;
    }
 </style>
-<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<a class="btn btn-primary" href="?temp=plugins&path=<?php echo $_GET["back"]; ?>">
+<script src="/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<%
+if(query.back==""){
+	redirect=""
+}else{
+	redirect="&path="+query.back
+}
+%>
+<a class="btn btn-primary" href="?temp=plugins<%-redirect%>">
   <i class="fas fa-arrow-left"></i>
 </a>
 <button class="btn btn-outline-success" onclick="save()">
@@ -24,13 +21,20 @@ if($_SERVER['PHP_AUTH_USER']==$panel_login && $_SERVER['PHP_AUTH_PW']==$panel_pa
 <button class="btn btn-outline-primary" onclick="document.location.reload()">
   Odśwież
 </button>
+<%
+var xd=query.loc.split("/");
+
+for(var i=0;i<xd.length;i++){
+	dirTree=dirTree[xd[i]];	
+}
+%>
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-             <div class="btn btn-dark text-light"><?php echo $_GET["file"]; ?></div>
+             <div class="btn btn-dark text-light"><%-query.file%></div>
         </div>
         <div class="panel-body">
-            <div id="editor"><?php echo htmlspecialchars(file_get_contents($_GET["loc"])); ?></div>
+            <div id="editor"><%=dirTree.data%></div>
         </div>
     </div>
     <br>
@@ -51,9 +55,9 @@ editor.setOptions({
 $(".xxdd").slideUp(0)
 function save(){
   var code=editor.getValue();
-  $.post("api/savefile.php",{
+  $.post("/api/savefile",{
     code:code,
-    plugin:"<?php echo $_GET["loc"]; ?>"
+    plugin:"<%-query.loc%>"
   },function (r){
     $(".xxdd").slideDown(100)
     setTimeout(function (){
@@ -78,4 +82,5 @@ $(window).bind('keydown', function(event) {
         //     break;
         }
     }
-});</script>
+});
+</script>

@@ -1,0 +1,67 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="card text-light" style="background:#292929">
+			<div class="card-header">
+			    Informacje
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-5 text-right p-1">
+						Adres IP:<br>
+						Limit graczy:<br>
+						Port gry:<br>
+						Port RCON:<br>
+					</div>
+					<div class="col-md-7 p-1">
+						<font color="blue"><%=config.server.host%></font>
+						<br>
+						<font color="blue"><%=properties["max-players"]%></font>
+						<br>
+						<font color="blue"><%=properties["server-port"]%></font>
+						<br>
+						<font color="blue"><%=properties["rcon.port"]%></font>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="card text-light" style="background:#292929">
+			<div class="card-header">
+			    Status serwera
+			</div>
+			<div class="card-body">
+				<center>
+					<div class="status"></div>
+					<div class="latency"></div>
+				</center>
+				<hr>
+				<div class="gracze">
+					Gracze:
+					<div class="progress bg-dark">
+					  	<div class="progress-bar x3 bg-success" role="progressbar" style="width: 0%"></div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+setInterval(function (){
+	$.get("api/status",null,function (r){
+		// console.log(r)
+		if(r.online==true){
+			$(".status").html("<font color='green'>Serwer jest online</font>")
+			$(".x3").text(r.current_players)
+			$(".x3").css("width",r.current_players/r.max_players*100+"%")
+			$(".latency").html("PING: "+r.latency+"ms")
+		}else{
+			$(".status").html("<font color='red'>Serwer jest offline</font>")
+		}
+		
+	})
+},1000)
+</script>
