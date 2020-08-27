@@ -15,6 +15,10 @@ npm install
 npm start
 ```
 
+> **Ważne:** Przy uruchamianiu potrzebna jest najnowsza wersja node.js i npm.<br>
+>  Przed uruchomieniem serwera zapoznaj się z plikiem config.json</u>.<br>
+>  Ważne jest to aby ścieżka do twojego servera kończyła się na <b>'/'</b> (np.: '/home/user/Desktop/server<b>/</b>')</u>.<br>
+
 <h3>Plik konfiguracyjny(config.json):</h3>
 
 ```php
@@ -22,7 +26,7 @@ npm start
 	"server":{
 		"host":"localhost",
 		"port":25565,
-		"path":"/ścieżka/do/plików/twojego/serwera"
+		"path":"/ścieżka/do/plików/twojego/serwera/"
 	},
 	"panel":{
 		"login":"admin",
