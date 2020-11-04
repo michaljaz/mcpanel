@@ -7,11 +7,7 @@ Prosty panel zarządzania serwerem minecraftowym.<br>
 ```bash
 git clone https://github.com/michaljaz/mcpanel
 cd mcpanel
-
-#instalacja bibliotek
-npm install
-
-#Uruchamianie serwera
+npm i
 npm start
 ```
 
