@@ -4,7 +4,7 @@
   "description": "Panel Zarządzania serwerem minecraftowym<br> <img src=\"screenshot.png\"      alt=\"Screenshot\"      style=\"float: left; margin-right: 10px;\" />      <br><br>",
   "main": "index.js",
   "scripts": {
-    "start": "node start.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "os-utils": "0.0.14",
     "rcon": "^1.0.3",
     "read-ini-file": "^3.0.0",
-    "systeminformation": "^4.26.12",
-    "uuid": "^8.3.0"
+    "systeminformation": "^4.27.11",
+    "uuid": "^8.3.1"
   }
 }

@@ -2,7 +2,7 @@
 	"server":{
 		"host":"localhost",
 		"port":25565,
-		"path":"/ścieżka/do/plików/twojego/serwera/"
+		"path":"/home/mike/Documents/docs/1-16-3-srv/"
 	},
 	"panel":{
 		"login":"admin",

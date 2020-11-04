@@ -35,15 +35,12 @@ npm start
 	}
 }
 ```
-<img src="src/screen1.png"
-     alt="Screenshot"
-     style="float: left; margin-right: 10px;margin-bottom:10px;" />
+<img src="https://i.ibb.co/FBHLXFZ/screen1.png"
+     alt="Screenshot"/>
      <br><br>
-<img src="src/screen2.png"
-     alt="Screenshot"
-     style="float: left; margin-right: 10px;margin-bottom:10px;" />
+<img src="https://i.ibb.co/wQzH6dq/screen2.png"
+     alt="Screenshot"/>
      <br><br>
-<img src="src/screen3.png"
-     alt="Screenshot"
-     style="float: left; margin-right: 10px;" />
+<img src="https://i.ibb.co/h9371tD/screen3.png"
+     alt="Screenshot"/>
      <br><br>

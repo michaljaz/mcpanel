@@ -6,11 +6,12 @@ const loadIniFile = require('read-ini-file')
 const Rcon = require('modern-rcon');
 const dirToJson = require('dir-to-json');
 const { v4: uuidv4 } = require('uuid');
-const filesize = require("filesize"); 
+const filesize = require("filesize");
 const ms=require("./minestat.js")
 const bodyParser = require('body-parser');
 
 app.set('view engine', 'ejs');
+app.set('views', __dirname+'/views')
 app.use(express.static(__dirname + '/public'));
 app.use((req, res, next) => {
 	  res.set('Cache-Control', 'no-store')
@@ -21,6 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 config=JSON.parse(fs.readFileSync(__dirname+'/config.json','utf8'))
 
 properties=loadIniFile.sync(config.server.path+"server.properties")
+
+console.log(properties["rcon.password"])
 
 const rcon = new Rcon(config.server.host,properties["rcon.password"]);
 
@@ -42,12 +45,12 @@ app.all('/', function(req, res) {
 		res.end('<html><body>Need some creds son</body></html>');
 	}else if(auth){
 		var tmp = auth.split(' ');
-        var buf = new Buffer(tmp[1], 'base64'); 
+        var buf = new Buffer(tmp[1], 'base64');
         var plain_auth = buf.toString();
         var creds = plain_auth.split(':');
         var username = creds[0];
         var password = creds[1];
-        if((username == config.panel.login) && (password == config.panel.password)) { 
+        if((username == config.panel.login) && (password == config.panel.password)) {
             res.statusCode = 200;
             genDirTree(config.server.path,function (dirTree){
 				res.render('index',{query:req.query,config,properties,dirTree});
@@ -73,11 +76,11 @@ app.all('/api/status/',function (req,res){
 	})
 })
 app.all('/rcon/server/',function (req,res){
-	
+
 	runCommand(req.query.cmd,function (resp){
 		res.send(resp)
 	})
-	
+
 })
 app.all('/api/getlogs/',function (req,res){
 	res.send(fs.readFileSync(config.server.path+'logs/latest.log','utf8'))
@@ -131,9 +134,9 @@ app.all('/api/delfiles/',function (req,res){
 				    if (err) throw err;
 				    // if no error, file has been deleted successfully
 				    console.log('File deleted!');
-				}); 
+				});
 			}
-			
+
 		}
 	})
 	res.send("OK")
@@ -158,7 +161,7 @@ function genDirTree(path,callback){
 			if(isFile==false){
 				len++
 			}
-			
+
 		})
 	  	files.forEach(file => {
 	  		var filePath=path+file
