@@ -1,21 +1,9 @@
 {
   "name": "mcpanel",
-  "version": "1.0.0",
-  "description": "Panel Zarządzania serwerem minecraftowym<br> <img src=\"screenshot.png\"      alt=\"Screenshot\"      style=\"float: left; margin-right: 10px;\" />      <br><br>",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js",
+		"coffee": "coffee -o src/ -cw coffee/"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/michaljaz/mcpanel.git"
-  },
-  "author": "Michał Jażdżyk",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/michaljaz/mcpanel/issues"
-  },
-  "homepage": "https://github.com/michaljaz/mcpanel#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dir-to-json": "0.0.3",

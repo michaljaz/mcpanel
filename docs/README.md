@@ -17,7 +17,7 @@ npm start
 
 <h3>Plik konfiguracyjny(config.json):</h3>
 
-```php
+```json
 {
 	"server":{
 		"host":"localhost",
